@@ -1,0 +1,104 @@
+USE DB_GestorEmpleados
+GO
+
+CREATE PROCEDURE InsertUsuario
+@Nombre VARCHAR(200),
+@Usuario VARCHAR(50),
+@Contraseña VARBINARY(MAX)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	BEGIN TRY
+		BEGIN TRANSACTION;
+			INSERT INTO Usuarios(Nombre, Usuario, Contraseña)
+				VALUES(@Nombre, @Usuario, @Contraseña)
+			SELECT SCOPE_IDENTITY();
+		COMMIT TRANSACTION;
+	END TRY
+	BEGIN CATCH
+		PRINT ERROR_MESSAGE();
+
+		IF XACT_STATE() = 1
+		BEGIN
+			ROLLBACK TRANSACTION;
+		END
+		ELSE IF XACT_STATE() = -1
+		BEGIN
+			ROLLBACK TRANSACTION;
+		END;
+		THROW
+	END CATCH
+END
+GO
+
+CREATE PROCEDURE UpdateUsuario
+@Nombe VARCHAR(200),
+@Usuario VARCHAR(50),
+@Contraseña VARBINARY(MAX),
+@CambiarPassword BIT,
+@IdUsuario INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	BEGIN TRY
+		BEGIN TRANSACTION;
+			IF(@CambiarPassword = 1)
+			BEGIN
+				UPDATE Usuarios
+					SET Nombre = @Nombe, Usuario = @Usuario, Contraseña = @Contraseña
+					WHERE IdUsuario = @IdUsuario AND Activo = 1;
+				SELECT SCOPE_IDENTITY();
+			END
+			IF(@CambiarPassword = 0)
+			BEGIN
+				UPDATE Usuarios
+					SET Nombre = @Nombe, Usuario = @Usuario
+					WHERE IdUsuario = @IdUsuario AND Activo = 1;
+				SELECT SCOPE_IDENTITY();
+			END
+		COMMIT TRANSACTION;
+	END TRY
+	BEGIN CATCH
+		PRINT ERROR_MESSAGE();
+
+		IF XACT_STATE() = 1
+		BEGIN
+			ROLLBACK TRANSACTION;
+		END
+		ELSE IF XACT_STATE() = -1
+		BEGIN
+			ROLLBACK TRANSACTION;
+		END;
+		THROW
+	END CATCH
+END
+GO
+
+CREATE PROCEDURE DeleteUsuario
+@IdUsuario INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	BEGIN TRY
+		BEGIN TRANSACTION;
+			UPDATE Usuarios
+				SET Activo = 0
+				WHERE IdUsuario = @IdUsuario AND Activo = 1;
+			SELECT SCOPE_IDENTITY();
+		COMMIT TRANSACTION;
+	END TRY
+	BEGIN CATCH
+		PRINT ERROR_MESSAGE();
+
+		IF XACT_STATE() = 1
+		BEGIN
+			ROLLBACK TRANSACTION;
+		END
+		ELSE IF XACT_STATE() = -1
+		BEGIN
+			ROLLBACK TRANSACTION;
+		END;
+		THROW
+	END CATCH
+END
+GO
