@@ -169,6 +169,11 @@
   <ItemGroup>
     <Compile Include="DAL\Connection.cs" />
     <Compile Include="DAL\DAL_Cargos.cs" />
+    <Compile Include="DAL\DAL_Empleados.cs" />
+    <Compile Include="DAL\DAL_MotivoExoneraciones.cs" />
+    <Compile Include="DAL\DAL_Sucursales.cs" />
+    <Compile Include="DAL\DAL_TipoContrataciones.cs" />
+    <Compile Include="DAL\DAL_Usuarios.cs" />
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>

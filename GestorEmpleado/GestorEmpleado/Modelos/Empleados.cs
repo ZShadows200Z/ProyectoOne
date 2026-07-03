@@ -10,6 +10,7 @@ namespace GestorEmpleado.Modelos
     {
         public int IdEmpleado { get; set; }
         public string Nombre { get; set; }
+        public string Identificacion { get; set; }
         public DateTime FechaIngreso { get; set; }
         public DateTime FechaExoneracion { get; set; }
         public int IdMotivoExoneracion { get; set; }
