@@ -43,12 +43,12 @@ namespace GestorEmpleado
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            AbrirFormulario<Editar>();
         }
         //Ingresar Empleados
         private void button2_Click(object sender, EventArgs e)

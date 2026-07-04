@@ -72,7 +72,7 @@ namespace GestorEmpleado.DAL
                 throw new Exception("Error al intentar eliminar un registro de la base de datos: " + ex.Message);
             }
         }
-        public static DataTable GetList()
+            public static DataTable GetList()
         {
             SqlConnection conn = new SqlConnection(Connection.ConextionString());
             conn.Open();

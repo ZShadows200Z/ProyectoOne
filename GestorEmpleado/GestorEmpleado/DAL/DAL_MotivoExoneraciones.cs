@@ -1,7 +1,8 @@
 ﻿using GestorEmpleado.Modelos;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,25 @@ namespace GestorEmpleado.DAL
                 throw new Exception("Error al intentar eliminar un registro de la base de datos: " + ex.Message);
             }
         }
-
+        public static DataTable GetList()
+        {
+            SqlConnection conn = new SqlConnection(Connection.ConextionString());
+            conn.Open();
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from MotivoExoneraciones", conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                da.Dispose();
+                conn.Close();
+                conn.Dispose();
+                return dt;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error al mostrar las MotivoExoneraciones: " + ex.Message);
+            }
+        }
     }
+
 }
