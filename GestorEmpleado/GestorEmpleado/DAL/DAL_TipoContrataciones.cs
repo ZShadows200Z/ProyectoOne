@@ -1,10 +1,11 @@
 ﻿using GestorEmpleado.Modelos;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 
 namespace GestorEmpleado.DAL
 {
@@ -69,6 +70,25 @@ namespace GestorEmpleado.DAL
             catch (SqlException ex)
             {
                 throw new Exception("Error al intentar eliminar un registro de la base de datos: " + ex.Message);
+            }
+        }
+            public static DataTable GetList()
+        {
+            SqlConnection conn = new SqlConnection(Connection.ConextionString());
+            conn.Open();
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from TipoContrataciones", conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                da.Dispose();
+                conn.Close();
+                conn.Dispose();
+                return dt;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error al mostrar las TipoContrataciones: " + ex.Message);
             }
         }
     }
