@@ -192,6 +192,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListaEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListaEmpleados.Designer.cs">
+      <DependentUpon>ListaEmpleados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modelos\Cargos.cs" />
     <Compile Include="Modelos\Empleados.cs" />
     <Compile Include="Modelos\MotivoExoneraciones.cs" />
@@ -217,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="INGEMP.resx">
       <DependentUpon>INGEMP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListaEmpleados.resx">
+      <DependentUpon>ListaEmpleados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
