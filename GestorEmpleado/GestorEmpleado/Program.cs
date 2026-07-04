@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GestorEmpleado
 {
@@ -14,9 +15,14 @@ namespace GestorEmpleado
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Form1 login = new Form1();//Creamos un Formulario Login para que se registren los usuario
+            if(login.ShowDialog() == DialogResult.OK)//Consultamos si el login fue exitoso
+            {
+                //Application.EnableVisualStyles();
+                //Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Dashboard());//Si fue exitoso abrimos el menú y el login se cierra
+            }
+
         }
     }
 }

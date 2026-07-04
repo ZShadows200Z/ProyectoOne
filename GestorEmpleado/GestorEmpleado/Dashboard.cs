@@ -16,6 +16,25 @@ namespace GestorEmpleado
         {
             InitializeComponent();
         }
+        //Función que abre formularios unicos
+        private void AbrirFormulario<T>() where T : Form, new()
+        {
+            Form formulario = Application.OpenForms
+                .OfType<T>()
+                .FirstOrDefault();
+            if(formulario == null)
+            {
+                formulario = new T();
+                formulario.Show();
+            }
+            else
+            {
+                formulario.BringToFront();
+
+                if (formulario.WindowState == FormWindowState.Minimized)
+                    formulario.WindowState = FormWindowState.Normal;
+            }
+        }
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
@@ -31,8 +50,13 @@ namespace GestorEmpleado
         {
 
         }
-
+        //Ingresar Empleados
         private void button2_Click(object sender, EventArgs e)
+        {
+            AbrirFormulario<INGEMP>();
+        }
+        //Configuracion
+        private void button6_Click(object sender, EventArgs e)
         {
 
         }

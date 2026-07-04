@@ -102,3 +102,18 @@ BEGIN
 	END CATCH
 END
 GO
+
+--Esto es para obtener la contraseña de un usuario y mandarlo a C#
+CREATE PROCEDURE ValidateLogin
+@Usuarios VARCHAR(50)
+AS
+BEGIN
+	BEGIN TRY
+		SELECT U.Contraseña FROM Usuarios U
+		WHERE U.Usuario = @Usuarios AND U.Activo = 1;
+	END TRY
+	BEGIN CATCH
+		THROW --Esto es para que tire el error a C# y ahí capturarlo
+	END CATCH
+END
+GO

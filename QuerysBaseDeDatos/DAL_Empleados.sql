@@ -3,7 +3,6 @@ GO
 
 CREATE PROCEDURE InsertEmpleado
 @Nombre VARCHAR(200),
-@Identificacion VARCHAR(20),
 @FechaIngreso DATETIME,
 @FechaExoneracion DATETIME,
 @IdMotivoExoneracion INT,
@@ -16,8 +15,20 @@ BEGIN
 	BEGIN TRY
 		BEGIN TRANSACTION;
 			INSERT INTO Empleados(Nombre, Identificacion, FechaIngreso, FechaExoneracion, IdMotivoExoneracion, IdTipoContratacion, IdSucural, IdCargo)
-			 VALUES (@Nombre, @Identificacion, @FechaIngreso, @FechaExoneracion, @IdMotivoExoneracion, @IdTipoContratacion, @IdSucursal, @IdCargo)
-			SELECT SCOPE_IDENTITY();
+			 VALUES (@Nombre, 'temporal', @FechaIngreso, @FechaExoneracion, @IdMotivoExoneracion, @IdTipoContratacion, @IdSucursal, @IdCargo)
+			
+			--Capturamos el Id de la insersion
+			DECLARE @EmpleadoId INT;
+			SET @EmpleadoId = SCOPE_IDENTITY();
+
+			DECLARE @Codigo VARCHAR(20);
+			SET @Codigo = 'EMP' + RIGHT('000000' + CAST(@EmpleadoId AS varchar(6)),6);
+
+			UPDATE Empleados
+			SET Identificacion = @Codigo
+			WHERE IdEmpleado = @EmpleadoId;
+
+			SELECT @EmpleadoId;
 		COMMIT TRANSACTION;
 	END TRY
 	BEGIN CATCH

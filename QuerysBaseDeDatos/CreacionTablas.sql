@@ -58,3 +58,30 @@ Contraseña VARBINARY(MAX) NOT NULL, --Es así y no INT o VARCHAR porque con una f
 Activo BIT NOT NULL DEFAULT 1
 )
 GO
+
+--Este es el primer usuario administrador para iniciar el programa.
+INSERT INTO Usuarios(Nombre, Usuario, Contraseña)
+	VALUES ('Señor Usuario Administrador', 'Admin', HASHBYTES('SHA2_512','1234'))
+GO
+
+/*INSERCIONES INICIALES*/
+INSERT INTO Cargos(Nombre)
+	VALUES	('Asistente Contable'),
+			('Analista Contable'),
+			('Gerente de Contabilidad'),
+			('Gerente de Administración'),
+			('Administrador'),
+			('Recursos Humanos'),
+			('Asistente de Recursos Humanos'),
+			('Arquitecto'),
+			('Ingeniero')
+GO
+
+INSERT INTO Sucursales(Nombre)
+	VALUES	('Managua - Camino Oriente'),
+			('Managua - Las Palmas'),
+			('Managua - Centro America'),
+			('Masaya'),
+			('Leon'),
+			('Matagalpa')
+GO

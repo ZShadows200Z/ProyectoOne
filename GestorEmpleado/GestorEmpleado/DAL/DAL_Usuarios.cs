@@ -78,5 +78,31 @@ namespace GestorEmpleado.DAL
                 throw new Exception("Error al eliminar el Usuario en la base de datos: " + ex.Message);
             }
         }
+        public static bool ValidateLogin(Usuarios entidad)
+        {
+            SqlConnection conn = new SqlConnection(Connection.ConextionString());
+            conn.Open();
+            byte[] contraseña;
+            try
+            {
+                SqlCommand cmd = new SqlCommand("ValidateLogin", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Usuarios", entidad.Usuario);
+                contraseña = (byte[])cmd.ExecuteScalar();
+                if(contraseña != null)
+                {
+                    cmd.Dispose();
+                    conn.Close();
+                    conn.Dispose();
+                    bool comprobarHash = entidad.Contraseña.SequenceEqual(contraseña);
+                    return comprobarHash;
+                }
+                return false;
+            }
+            catch(SqlException ex)
+            {
+                throw new Exception("Error base de datos: " + ex.Message);
+            }
+        }
     }
 }
