@@ -85,3 +85,9 @@ INSERT INTO Sucursales(Nombre)
 			('Leon'),
 			('Matagalpa')
 GO
+
+INSERT INTO TipoContrataciones(Tipo)
+	VALUES	('Motivo no establecido'),
+			('Contrato nominal'),
+			('Servicio Profesional'),
+			(''),

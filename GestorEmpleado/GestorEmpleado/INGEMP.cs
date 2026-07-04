@@ -1,11 +1,14 @@
 ﻿using GestorEmpleado.DAL;
+using GestorEmpleado.Modelos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,6 +25,8 @@ namespace GestorEmpleado
         {
             CargarComboCargos();
             CargarComboSucursales();
+            dateTimePicker1.Value = DateTime.Now;
+            dateTimePicker2.Value = DateTime.Now;
         }
         //Metodo para cargar combobox con información de la base de datos
         private void CargarComboCargos()
@@ -50,6 +55,28 @@ namespace GestorEmpleado
             comboBox2.DisplayMember = "Nombre";
             comboBox2.ValueMember = "IdSucursal";
         }
+        //Validaciones
+        private bool ValidateNombreNull()
+        {
+            if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrWhiteSpace(textBox1.Text))
+            {
+                MessageBox.Show("Agregue un Nombre para el empleado");
+                return false;
+            }
+            return true;
+        }
+        private bool ValidateRowCombo(ComboBox sender)
+        {
+            int idSeleccionado = Convert.ToInt32(sender.SelectedValue);
+
+            // Validar que no sea la opción inicial
+            if (idSeleccionado == 0)
+            {
+                MessageBox.Show("Recibió encabezados, por favor, seleccione una opción correcta de la cada de elección");
+                return false;
+            }
+            return true;
+        }
 
         private void label3_Click(object sender, EventArgs e)
         {
@@ -58,7 +85,27 @@ namespace GestorEmpleado
         //Boton Guardar
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if(ValidateNombreNull() && ValidateRowCombo(comboBox1) && ValidateRowCombo(comboBox2))
+            {
+                try
+                {
+                    Empleados empleados = new Empleados();
+                    empleados.Nombre = Regex.Replace(textBox1.Text.Trim(), "[^a-zA-Z0-9 ]", "");
+                    empleados.IdCargo = Convert.ToInt32(comboBox1.SelectedValue);
+                    empleados.IdSucursal = Convert.ToInt32(comboBox2.SelectedValue);
+                    empleados.FechaIngreso = dateTimePicker1.Value;
+                    empleados.FechaExoneracion = dateTimePicker2.Value;
+                    empleados.IdMotivoExoneracion = 1;//1 significa NoExonerado
+                    empleados.IdTipoContratacion = 1;//1 significa Motivo No establecido
+                    DAL_Empleados.Insertar(empleados);
+                    MessageBox.Show("El Empleado fue agregado");
+                    this.Close();
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show("Error en la base de datos: " + ex.Message);
+                }
+            }
         }
     }
 }

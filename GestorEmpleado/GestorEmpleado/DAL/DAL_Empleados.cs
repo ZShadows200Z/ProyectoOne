@@ -17,7 +17,7 @@ namespace GestorEmpleado.DAL
 
             try
             {
-                SqlCommand cmd = new SqlCommand("InsertEmpleados", conn);
+                SqlCommand cmd = new SqlCommand("InsertEmpleado", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Nombre", entidad.Nombre);
                 cmd.Parameters.AddWithValue("@FechaIngreso", entidad.FechaIngreso);
