@@ -89,5 +89,16 @@ GO
 INSERT INTO TipoContrataciones(Tipo)
 	VALUES	('Motivo no establecido'),
 			('Contrato nominal'),
-			('Servicio Profesional'),
-			(''),
+			('Servicio Profesional')
+GO
+
+INSERT INTO MotivoExoneraciones(Motivo)
+	VALUES	('No Exonerado'),
+			('Renuncia voluntaria'),
+			('Despido'),
+			('Mejor oferta laboral'),
+			('Mal desempeño laboral')
+GO
+
+SELECT * FROM Empleados
+GO

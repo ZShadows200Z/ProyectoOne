@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestorEmpleado.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,18 @@ namespace GestorEmpleado
         public ListaEmpleados()
         {
             InitializeComponent();
+        }
+
+        private void ListaEmpleados_Load(object sender, EventArgs e)
+        {
+            CargarDataGridView();
+        }
+
+        public void CargarDataGridView()
+        {
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = DAL_Empleados.GetList();
+            dataGridView1.Columns["IdEmpleado"].Visible = false;
         }
     }
 }
